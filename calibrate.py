@@ -11,7 +11,7 @@ objp[:, :2] = np.mgrid[0:7, 0:6].T.reshape(-1, 2)
 objpoints = []
 imgpoints = []
 
-images = glob.glob('calib_pics/*.jpg')
+images = glob.glob('calib_pics/*.jpeg')
 
 for image_file in images:
     img = cv.imread(image_file)
@@ -36,14 +36,14 @@ ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.sha
 
 # test undistortion on one image
 
-img = cv.imread("img.jpg")
+img = cv.imread("test15.jpeg")
 height, width = img.shape[:2]
 new_matrix, roi = cv.getOptimalNewCameraMatrix(mtx, dist, (width, height), 1, (width, height))
 
 dst = cv.undistort(img, mtx, dist, None, new_matrix)
 x, y, w, h = roi
 dst = dst[y:y+h, x:x+w]
-cv.imwrite("calibresult.jpg", dst)
+cv.imwrite("calibresult.jpeg", dst)
 
 mean_err = 0
 for i in range(len(objpoints)):
