@@ -19,7 +19,6 @@ for image_file in images:
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     # find corners
     ret, corners = cv.findChessboardCorners(gray, (9, 6), None)
-    print(ret)
     if ret:
         objpoints.append(objp)
         # find more accurate corners
@@ -55,3 +54,4 @@ for i in range(len(objpoints)):
 mean_err = total_error / len(objpoints)
 print(mean_err)
 
+np.savez("coef.npz", ret=ret, mtx=mtx, dist=dist, rvecs=rvecs, tvecs=tvecs)
